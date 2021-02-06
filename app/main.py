@@ -1,10 +1,11 @@
 from next_word_prediction import GPT2
 
 
-import numpy as np
+import pickle
 from flask import Flask, request, render_template, make_response, redirect, url_for
 
 model = GPT2()
+#model = pickle.load(open('app/model.sav', 'rb'))
 app = Flask(__name__)
 
 
