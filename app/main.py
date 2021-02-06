@@ -1,12 +1,11 @@
-from next_word_prediction import GPT2
-import pickle
-from flask import Flask, request, render_template, make_response, redirect, url_for
-
+from flask import Flask, request, render_template, redirect, url_for
+from app.create_model import load_model
 from rq import Queue
-from app.worker import conn
+from worker import conn
+
 
 q = Queue(connection=conn)
-model = q.enqueue(GPT2)
+model = q.enqueue(load_model)
 #model = GPT2()
 #model = pickle.load(open('app/model.sav', 'rb'))
 app = Flask(__name__)
@@ -22,6 +21,7 @@ def my_form_post():
     text = request.form['text']
     response = get_prediction(text)
     return render_template('input_form.html', entered_text=text, predicted_text=response)
+
 
 @app.route('/', methods=['POST'])
 def delete_images():
