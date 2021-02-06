@@ -11,7 +11,6 @@ jmespath==0.10.0
 joblib==1.0.0
 MarkupSafe==1.1.1
 next-word-prediction==0.2.0
-numpy==1.20.0
 python-dateutil==2.8.1
 pytorch-transformers==1.2.0
 regex==2020.11.13
