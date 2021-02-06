@@ -1,10 +1,13 @@
 from next_word_prediction import GPT2
-
-
 import pickle
 from flask import Flask, request, render_template, make_response, redirect, url_for
 
-model = GPT2()
+from rq import Queue
+from app.worker import conn
+
+q = Queue(connection=conn)
+model = q.enqueue(GPT2)
+#model = GPT2()
 #model = pickle.load(open('app/model.sav', 'rb'))
 app = Flask(__name__)
 
