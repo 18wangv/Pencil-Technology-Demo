@@ -1,12 +1,13 @@
 from flask import Flask, request, render_template, redirect, url_for
+from next_word_prediction import GPT2
 from app.create_model import load_model
 from rq import Queue
 from worker import conn
 
 
-q = Queue(connection=conn)
-model = q.enqueue(load_model)
-#model = GPT2()
+#q = Queue(connection=conn)
+#model = q.enqueue(load_model())
+model = GPT2()
 #model = pickle.load(open('app/model.sav', 'rb'))
 app = Flask(__name__)
 
@@ -27,6 +28,7 @@ def my_form_post():
 def delete_images():
     if request.method == 'POST':
         return redirect(url_for('my_form'))
+
 
 def get_prediction(data):
     prediction = model.predict_next(data,5)  # runs globally loaded model on the data
